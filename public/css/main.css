@@ -39,3 +39,12 @@ html{
     font-size: 10px;
     color: rgba(255,255,255,0.5);
 }
+#tag
+{
+    position:absolute;
+    z-index: 10;
+    bottom: 10px;
+    left: 10px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.5);
+}
