@@ -1,0 +1,41 @@
+html{
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    top: 0px;
+    left: 0px;
+    background: rgba(0,0,0,1)
+}
+* 
+{ 
+    padding: 0; 
+    margin: 0; 
+    font-family: Tahoma, sans-serif;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+} 
+#canvas 
+{ 
+    padding: 0;
+    margin: auto;
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vmin;
+    height: 100vmin;
+    
+}
+#tag
+{
+    position:absolute;
+    z-index: 10;
+    bottom: 10px;
+    right: 10px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.5);
+}
