@@ -12,7 +12,7 @@ function engine_update() {
         if (!player.jumping && player.grounded) {
             player.jumping = true;
             player.grounded = false;
-            player.velY = -player.speed * 3;//how high to jump
+            player.velY = -player.speed * 4;//how high to jump
         }
     }
     if (keys[39] || keys[68]) {
@@ -160,9 +160,14 @@ function engine_update() {
             }
             else if(particles[j].type == "firefly") {
                 var spr = document.getElementById("particle1");
-                particles[j].x += Math.cos(particles[j].motion) / 5;
-                particles[j].y += Math.sin(particles[j].motion) / 5;
-                particles[j].motion += (Math.random() - 0.5) / 5;
+                particles[j].x += Math.cos(particles[j].motion) / 3;
+                particles[j].y += Math.sin(particles[j].motion) / 3;
+                particles[j].motion += (Math.random() - 0.5) / 6;
+                if (particles[j].x < -50) { particles[j].motion = 0}
+                else if (particles[j].x > width + 50) { particles[j].motion = Math.PI}
+                else if (particles[j].y > height + 50) { particles[j].motion = (Math.PI * 3) / 2}
+                else if (particles[j].y < -50) { particles[j].motion = Math.PI / 2}
+
                 ctx.drawImage(spr, particles[j].x, particles[j].y, 16, 16);
             }
             
@@ -205,7 +210,7 @@ function particle_firefly(){
         diameter: 5,
         x: Math.random() * (width - 50) + 50,
         y: Math.random() * (height - 50) + 50,
-        motion: Math.random()
+        motion: Math.random() * 2 * Math.PI
     })
 }
 // ADD 5 automatically
@@ -214,6 +219,7 @@ particle_firefly()
 particle_firefly()
 particle_firefly()
 particle_firefly()
+
 
 
 
