@@ -29,15 +29,17 @@ function engine_update() {
     }
 
     // check score
-    obj_score = 0
+    obj_score = 0;
+    full_score = 0;
     for (var i = 0; i < objects.length; i++) {
         if (objects[i].scorable){
+            full_score += 1;
             if (objects[i].state == 'infected'){
                 obj_score += 1;
             }
         }
     }
-    score = Math.floor(obj_score / objects.length * 100);
+    score = Math.floor(obj_score / full_score * 100);
   
   	
 
@@ -63,7 +65,6 @@ function engine_update() {
         } else if (dir === "b") {
             player.grounded = true;
             player.jumping = false;
-            console.log('ground')
         } else if (dir === "t") {
             player.velY *= -1; // TODO: sus
         }
@@ -81,7 +82,6 @@ function engine_update() {
     ctx.fillRect(player.x, player.y, player.width, player.height);
 
     // OBJECTS
-    console.log(objects)
     for (var i = 0; i < objects.length; i++) {
         var spr = document.getElementById(objects[i].sprite);
         ctx.drawImage(spr, objects[i].x, objects[i].y,objects[i].width,objects[i].height);
@@ -149,20 +149,32 @@ function engine_update() {
     // draw particles
     for (j = 0; j < particles.length; j++){
         if (particles[j].age <= particles[j].death) {
-            particles[j].age += 1;
-            particles[j].diameter += 1;
-            ctx.beginPath();
-            ctx.strokeStyle = "rgba(0,255,0," + ((particles[j].death - particles[j].age) / particles[j].death) + ")";
-            ctx.lineWidth = 1;
-            ctx.arc(particles[j].x, particles[j].y, particles[j].diameter, 0, 2 * Math.PI);
-            ctx.stroke();
+            if (particles[j].type == "ring"){
+                particles[j].age += 1;
+                particles[j].diameter += 1;
+                ctx.beginPath();
+                ctx.strokeStyle = "rgba(0,255,0," + ((particles[j].death - particles[j].age) / particles[j].death) + ")";
+                ctx.lineWidth = 1;
+                ctx.arc(particles[j].x, particles[j].y, particles[j].diameter, 0, 2 * Math.PI);
+                ctx.stroke();
+            }
+            else if(particles[j].type == "firefly") {
+                var spr = document.getElementById("particle1");
+                particles[j].x += Math.cos(particles[j].motion) / 5;
+                particles[j].y += Math.sin(particles[j].motion) / 5;
+                particles[j].motion += (Math.random() - 0.5) / 5;
+                ctx.drawImage(spr, particles[j].x, particles[j].y, 16, 16);
+            }
+            
         }
         
     }
     // clean up particles
     for (j = particles.length - 1; j > -1; j--){
-        if (particles[j].age > particles[j].death){
-            particles.splice(j, 1); // 2nd parameter means remove one item only
+        if (particles[j].age != -1){
+            if (particles[j].age > particles[j].death){
+                particles.splice(j, 1); // 2nd parameter means remove one item only
+            }
         }
     }
     // draw text
@@ -174,9 +186,9 @@ function engine_update() {
 }
 // INTERNAL ONLY
 function particle_ring(){
-    console.log("created particle");
+    console.log("created particle ring");
     particles.push({
-        type: "circle",
+        type: "ring",
         age: 0,
         death: 50,
         diameter: 5,
@@ -184,6 +196,24 @@ function particle_ring(){
         y: player.y + block_size /2,
     })
 }
+function particle_firefly(){
+    console.log("created particle firefly");
+    particles.push({
+        type: "firefly",
+        age: -1,
+        death: 0,
+        diameter: 5,
+        x: Math.random() * (width - 50) + 50,
+        y: Math.random() * (height - 50) + 50,
+        motion: Math.random()
+    })
+}
+// ADD 5 automatically
+particle_firefly()
+particle_firefly()
+particle_firefly()
+particle_firefly()
+particle_firefly()
 
 
 

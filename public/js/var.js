@@ -21,7 +21,7 @@ var player = {
     y: 200,
     width: 16,
     height: 16,
-    speed: 2,
+    speed: 1,
     velX: 0,
     velY: 0,
     jumping: false,
@@ -31,7 +31,7 @@ var player = {
 levels = {},
 keys = [],
 friction = 0.8,
-gravity = 0.2,
+gravity = 0.1,
 colliders = [],
 objects = [],
 powerup = [];
