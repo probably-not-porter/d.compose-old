@@ -197,8 +197,8 @@ function particle_ring(){
         age: 0,
         death: 50,
         diameter: 5,
-        x: player.x + block_size /2,
-        y: player.y + block_size /2,
+        x: player.x + player.width / 2,
+        y: player.y + player.height / 2,
     })
 }
 function particle_firefly(){

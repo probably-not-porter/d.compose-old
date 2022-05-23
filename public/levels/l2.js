@@ -20,6 +20,15 @@ let l2 = {
             sprite: "plat1",
             state: 'abnormal',
             scorable: false
+        },
+        {
+            x: 320,
+            y: 40,
+            width: 64,
+            height: 64,
+            sprite: "mush2",
+            state: 'abnormal',
+            scorable: false
         }
     ]
 }
