@@ -34,16 +34,18 @@ friction = 0.8,
 gravity = 0.1,
 colliders = [],
 objects = [],
-powerup = [];
+powerup = [],
+enemies = [];
 
 // PUBLIC FUNCTION
 function var_load(n){
     if (levels[n]) {
-        player.x = levels[n].playerx;
-        player.y = levels[n].playery;
-        colliders = levels[n].colliders || [];
-        powerup = levels[n].powerup || [];
-        objects = levels[n].objects || [];
+        player.x = JSON.parse(JSON.stringify(levels[n].playerx));
+        player.y = JSON.parse(JSON.stringify(levels[n].playery));
+        colliders = JSON.parse(JSON.stringify(levels[n].colliders || []));
+        powerup = JSON.parse(JSON.stringify(levels[n].powerup || []));
+        objects = JSON.parse(JSON.stringify(levels[n].objects || []));
+        enemies = JSON.parse(JSON.stringify(levels[n].enemies || []));
     }
 }
 

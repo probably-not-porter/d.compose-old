@@ -3,17 +3,21 @@ particles = [
 
 ]
 score = 0;
+jump_reset = true;
 
 // EXTERNAL FUNCTIONS
 function engine_update() {
     // check keys
     if (keys[38] || keys[32] || keys[87]) {
         // up arrow or space
-        if (!player.jumping && player.grounded) {
+        if (!player.jumping && player.grounded && jump_reset) {
             player.jumping = true;
             player.grounded = false;
             player.velY = -player.speed * 4;//how high to jump
+            jump_reset = false;
         }
+    }else{
+        jump_reset = true;
     }
     if (keys[39] || keys[68]) {
         // right arrow
@@ -35,30 +39,27 @@ function engine_update() {
         if (objects[i].scorable){
             full_score += 1;
             if (objects[i].state == 'infected'){
-                obj_score += 1;
+                obj_score += 1 * objects[i].val / 100;
             }
         }
     }
-    score = Math.floor(obj_score / full_score * 100);
+    score = Math.round(obj_score / full_score * 100 * 10) / 10;
   
   	
 
-    player.velX *= friction;
-    player.velY += gravity;
+    
 
     ctx.clearRect(0, 0, width, height);
     ctx.drawImage(img_background, 0, 0,640,640);
     ctx.beginPath();
-    
+
+    player.velX *= friction;
+    player.velY += gravity;
     player.grounded = false;
     
     // check all box colliders for level
     for (var i = 0; i < colliders.length; i++) {//print colliders
-        ctx.fillStyle = "rgba(0,0,0,0.1)"        // colliders[i].color;
-        ctx.rect(colliders[i].x, colliders[i].y, colliders[i].width, colliders[i].height);
-        
         var dir = colCheck(player, colliders[i]);
-
         if (dir === "l" || dir === "r") {
             player.velX = 0;
             player.jumping = false;
@@ -66,16 +67,114 @@ function engine_update() {
             player.grounded = true;
             player.jumping = false;
         } else if (dir === "t") {
-            player.velY *= -1; // TODO: sus
+            player.velY = 0; // TODO: sus
         }
     }
-    
-    if(player.grounded){
-         player.velY = 0;
-    }
-    
+    if(player.grounded){ player.velY = 0; }
     player.x += player.velX;
     player.y += player.velY;
+
+    // enemies
+    for (var i = 0; i < enemies.length; i++){
+        // check for player collision
+        var dir = colCheck(enemies[i], player);
+        if (dir != null){
+            var_load(2)
+            particles = [];
+            // ADD 5 automatically
+            particle_firefly()
+            particle_firefly()
+            particle_firefly()
+            particle_firefly()
+            particle_firefly()
+        }
+        
+        enemies[i].velX *= friction;
+        
+        enemies[i].grounded = false;
+        
+        // check all box colliders for level
+        for (var j = 0; j < colliders.length; j++) {//print colliders
+            var dir = colCheck(enemies[i], colliders[j]);
+
+            
+    
+            if (dir === "l") {
+                enemies[i].velX = 0;
+                enemies[i].jumping = false;
+                if (player.y > enemies[i].y){
+                    enemies[i].velY = 10;
+                }
+                else{
+                    enemies[i].velY = -0.2;
+                }
+            }else if (dir === "r") {
+                enemies[i].velX = 0;
+                enemies[i].jumping = false;
+                if (player.y > enemies[i].y){
+                    enemies[i].velY = 0.2;
+                }
+                else{
+                    enemies[i].velY = -0.2;
+                }
+            }else if (dir === "b") {
+                enemies[i].grounded = true;
+                enemies[i].jumping = false;
+                if (player.x > enemies[i].x){
+                    enemies[i].velX = 0.2;
+                }
+                else{
+                    enemies[i].velX = -0.2;
+                }
+            } else if (dir === "t") {
+                enemies[i].velY = 0; // TODO: sus
+            } else if (dir == null) {
+                enemies[i].velY = 1; // TODO: sus
+            }
+        }
+        for (var j = 0; j < objects.length; j++) {
+            if(colSoftCheck(enemies[i], objects[j]) == true){
+                if (objects[j].state == 'infected'){
+                    if (objects[j].val >= 0){
+                        objects[j].val -= 0.1;
+                    }
+                }
+            }
+        }
+        
+        if(enemies[i].grounded){
+            enemies[i].velY = 0;
+        }
+        
+        enemies[i].x += enemies[i].velX;
+        enemies[i].y += enemies[i].velY;
+        ctx.fillStyle = enemies[i].color;
+        ctx.fillRect(enemies[i].x, enemies[i].y, enemies[i].width, enemies[i].height);
+    }
+
+    // OBJECTS
+    for (var i = 0; i < objects.length; i++) {
+        if (objects[i].layer == "background" && objects[i].state != "destroyed"){
+            var spr = document.getElementById(objects[i].sprite);
+            ctx.drawImage(spr, objects[i].x, objects[i].y,objects[i].width,objects[i].height);
+            
+            if(colSoftCheck(player, objects[i]) == true){
+                objects[i].val = 100;
+                if (objects[i].state == 'normal'){
+                    console.log("test");
+                    objects[i].state = 'infected';
+                    particle_mushroom(objects[i].x,objects[i].y,objects[i].x + objects[i].width,objects[i].y + objects[i].height,i); // create mushroom particles on infected block.
+                    particle_mushroom(objects[i].x,objects[i].y,objects[i].x + objects[i].width,objects[i].y + objects[i].height,i); // create mushroom particles on infected block.
+                    particle_mushroom(objects[i].x,objects[i].y,objects[i].x + objects[i].width,objects[i].y + objects[i].height,i); // create mushroom particles on infected block.
+                    particle_ring();
+                }
+            }
+        }else if (objects[i].layer == "loader"){
+            if(colSoftCheck(player, objects[i]) == true){
+                var_load(objects[i].state);
+            }
+        }
+    }
   
     ctx.fill();//Draw charater stuff
     ctx.fillStyle = player.color;
@@ -83,18 +182,19 @@ function engine_update() {
 
     // OBJECTS
     for (var i = 0; i < objects.length; i++) {
-        var spr = document.getElementById(objects[i].sprite);
-        ctx.drawImage(spr, objects[i].x, objects[i].y,objects[i].width,objects[i].height);
-        if (objects[i].state == 'infected'){
-            ctx.fillStyle = "rgba(14,106,14,0.3)"        // colliders[i].color;
-            ctx.fillRect(objects[i].x, objects[i].y, objects[i].width, objects[i].height);
-        }
-        
-        if(colSoftCheck(player, objects[i]) == true){
-            if (objects[i].state == 'normal'){
-                objects[i].state = 'infected';
-                console.log('test')
-                particle_ring();
+        if (objects[i].layer == "foreground" && objects[i].state != "destroyed"){
+            var spr = document.getElementById(objects[i].sprite);
+            ctx.drawImage(spr, objects[i].x, objects[i].y,objects[i].width,objects[i].height);
+            
+            if(colSoftCheck(player, objects[i]) == true){
+                if (objects[i].state == 'normal'){
+                    console.log("test");
+                    objects[i].state = 'infected';
+                    particle_mushroom(objects[i].x,objects[i].y,objects[i].x + objects[i].width,objects[i].y + objects[i].height,i); // create mushroom particles on infected block.
+                    particle_mushroom(objects[i].x,objects[i].y,objects[i].x + objects[i].width,objects[i].y + objects[i].height,i); // create mushroom particles on infected block.
+                    particle_mushroom(objects[i].x,objects[i].y,objects[i].x + objects[i].width,objects[i].y + objects[i].height,i); // create mushroom particles on infected block.
+                    particle_ring();
+                }
             }
         }
     }
@@ -170,6 +270,14 @@ function engine_update() {
 
                 ctx.drawImage(spr, particles[j].x, particles[j].y, 16, 16);
             }
+            else if(particles[j].type == "mushroom") {
+                var spr = document.getElementById("particle2");
+                particles[j].diameter += 1;
+                let size = particles[j].diameter / 100;
+                if (size > particles[j].motion) { size = particles[j].motion; }
+                ctx.drawImage(spr, particles[j].x - 8 * size, particles[j].y - 16 * size, 16 * size * (objects[particles[j].parent].val / 100), 16 * size * (objects[particles[j].parent].val / 100));
+
+            }
             
         }
         
@@ -191,18 +299,16 @@ function engine_update() {
 }
 // INTERNAL ONLY
 function particle_ring(){
-    console.log("created particle ring");
     particles.push({
         type: "ring",
         age: 0,
         death: 50,
-        diameter: 5,
+        diameter: 0,
         x: player.x + player.width / 2,
         y: player.y + player.height / 2,
     })
 }
 function particle_firefly(){
-    console.log("created particle firefly");
     particles.push({
         type: "firefly",
         age: -1,
@@ -213,13 +319,26 @@ function particle_firefly(){
         motion: Math.random() * 2 * Math.PI
     })
 }
+function particle_mushroom(x1,y1,x2,y2, parent){
+    particles.push({
+        type: "mushroom",
+        age: -1,
+        death: 0,
+        diameter: 5,
+        parent: parent,
+        x: getRandomArbitrary(x1, x2),
+        y: getRandomArbitrary(y1, y1 + 16),
+        motion: Math.random() / 2 + 0.5
+    })
+    console.log(particles);
+}
+
 // ADD 5 automatically
 particle_firefly()
 particle_firefly()
 particle_firefly()
 particle_firefly()
 particle_firefly()
-
 
 
 
@@ -282,3 +401,9 @@ function colSoftCheck(shapeA, shapeB) {
     var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
     window.requestAnimationFrame = requestAnimationFrame;
 })();
+
+
+
+function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
+  }
