@@ -55,8 +55,8 @@ let l2 = {
         {
             x: 500,
             y: 608 - 15,
-            width: 16,
-            height: 16,
+            width: 32,
+            height: 32,
             speed: 1,
             velX: 0,
             velY: 0,

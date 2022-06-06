@@ -103,7 +103,7 @@ function engine_update() {
                 enemies[i].velX = 0;
                 enemies[i].jumping = false;
                 if (player.y > enemies[i].y){
-                    enemies[i].velY = 10;
+                    //enemies[i].velY = 10;
                 }
                 else{
                     enemies[i].velY = -0.2;
@@ -111,12 +111,6 @@ function engine_update() {
             }else if (dir === "r") {
                 enemies[i].velX = 0;
                 enemies[i].jumping = false;
-                if (player.y > enemies[i].y){
-                    enemies[i].velY = 0.2;
-                }
-                else{
-                    enemies[i].velY = -0.2;
-                }
             }else if (dir === "b") {
                 enemies[i].grounded = true;
                 enemies[i].jumping = false;
@@ -149,7 +143,17 @@ function engine_update() {
         enemies[i].x += enemies[i].velX;
         enemies[i].y += enemies[i].velY;
         ctx.fillStyle = enemies[i].color;
-        ctx.fillRect(enemies[i].x, enemies[i].y, enemies[i].width, enemies[i].height);
+
+
+        
+        if (enemies[i].velX > 0){
+            var spr = document.getElementById('snail2');
+            ctx.drawImage(spr, enemies[i].x, enemies[i].y,enemies[i].width,enemies[i].height);
+        }else{
+            var spr = document.getElementById('snail');
+            ctx.drawImage(spr, enemies[i].x, enemies[i].y,enemies[i].width,enemies[i].height);
+        }
+        
     }
 
     // OBJECTS
