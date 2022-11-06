@@ -4,9 +4,16 @@ particles = [
 ]
 score = 0;
 jump_reset = true;
+parallax_counter = 0;
 
 // EXTERNAL FUNCTIONS
 function engine_update() {
+    if (parallax_counter > width){
+        parallax_counter = 0;
+    }
+    else{
+        parallax_counter += parallax_speed;
+    }
     // check keys
     if (keys[38] || keys[32] || keys[87]) {
         // up arrow or space
@@ -50,7 +57,13 @@ function engine_update() {
     
 
     ctx.clearRect(0, 0, width, height);
-    ctx.drawImage(img_background, 0, 0,640,640);
+
+    // draw background
+
+    ctx.drawImage(img_bg1, 0, 0,640,640);
+    ctx.drawImage(img_bg2, 0 + parallax_counter, 0,640,640);
+    ctx.drawImage(img_bg2, (-1*width) + parallax_counter, 0,640,640);
+    ctx.drawImage(img_bg3, 0, 0,640,640);
     ctx.beginPath();
 
     player.velX *= friction;
@@ -79,7 +92,7 @@ function engine_update() {
         // check for player collision
         var dir = colCheck(enemies[i], player);
         if (dir != null){
-            var_load(2)
+            load_level(0)
             particles = [];
             // ADD 5 automatically
             particle_firefly()
@@ -165,7 +178,6 @@ function engine_update() {
             if(colSoftCheck(player, objects[i]) == true){
                 objects[i].val = 100;
                 if (objects[i].state == 'normal'){
-                    console.log("test");
                     objects[i].state = 'infected';
                     particle_mushroom(objects[i].x,objects[i].y,objects[i].x + objects[i].width,objects[i].y + objects[i].height,i); // create mushroom particles on infected block.
                     particle_mushroom(objects[i].x,objects[i].y,objects[i].x + objects[i].width,objects[i].y + objects[i].height,i); // create mushroom particles on infected block.
@@ -175,7 +187,7 @@ function engine_update() {
             }
         }else if (objects[i].layer == "loader"){
             if(colSoftCheck(player, objects[i]) == true){
-                var_load(objects[i].state);
+                load_level(objects[i].state);
             }
         }
     }
@@ -192,7 +204,6 @@ function engine_update() {
             
             if(colSoftCheck(player, objects[i]) == true){
                 if (objects[i].state == 'normal'){
-                    console.log("test");
                     objects[i].state = 'infected';
                     particle_mushroom(objects[i].x,objects[i].y,objects[i].x + objects[i].width,objects[i].y + objects[i].height,i); // create mushroom particles on infected block.
                     particle_mushroom(objects[i].x,objects[i].y,objects[i].x + objects[i].width,objects[i].y + objects[i].height,i); // create mushroom particles on infected block.
@@ -334,7 +345,6 @@ function particle_mushroom(x1,y1,x2,y2, parent){
         y: getRandomArbitrary(y1, y1 + 16),
         motion: Math.random() / 2 + 0.5
     })
-    console.log(particles);
 }
 
 // ADD 5 automatically
