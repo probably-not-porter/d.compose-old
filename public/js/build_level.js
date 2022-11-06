@@ -51,6 +51,11 @@ function build_level(arr, block_size){
                 case "##":
                     break;
 
+                case "%%":                  // PLAYER
+                    level.playerx = x * block_size;
+                    level.playery = y * block_size;
+                    break;
+
                 case "b1":                  // BLOCK 1
                     level.objects.push({
                         x: x * block_size,
@@ -107,6 +112,51 @@ function build_level(arr, block_size){
                         width: 32,
                         height: 16,
                         color: null
+                    });
+                    break;
+
+                case "pm":                  // PLATFORM RIGHT
+                    level.objects.push({
+                        x: x * block_size,
+                        y: y * block_size,
+                        width: 32,
+                        height: 32,
+                        sprite: "pm",
+                        state: 'abnormal',
+                        layer: 'foreground',
+                        scorable: false
+                    });
+                    level.colliders.push({
+                        x: x * block_size,
+                        y: y * block_size,
+                        width: 32,
+                        height: 16,
+                        color: null
+                    });
+                    break;
+
+                case "d1":                  // decoration 1
+                    level.objects.push({ // starting platform decor
+                        x: x * block_size,
+                        y: y * block_size - block_size,
+                        width: 32,
+                        height: 64,
+                        sprite: "mush1",
+                        state: 'abnormal',
+                        layer: 'foreground',
+                        scorable: false
+                    });
+                    break;
+                case "d2":                  // decoration 2
+                    level.objects.push({ // starting platform decor
+                        x: x * block_size,
+                        y: y * block_size - block_size,
+                        width: 64,
+                        height: 64,
+                        sprite: "mush2",
+                        state: 'abnormal',
+                        layer: 'foreground',
+                        scorable: false
                     });
                     break;
                 default:

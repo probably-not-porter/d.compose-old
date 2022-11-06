@@ -8,12 +8,14 @@ parallax_counter = 0;
 
 // EXTERNAL FUNCTIONS
 function engine_update() {
+    ctx.scale(1,1);
     if (parallax_counter > width){
         parallax_counter = 0;
     }
     else{
         parallax_counter += parallax_speed;
     }
+    
     // check keys
     if (keys[38] || keys[32] || keys[87]) {
         // up arrow or space
@@ -306,9 +308,7 @@ function engine_update() {
         }
     }
     // draw text
-    ctx.font = "20px Arial";
-    ctx.fillStyle = "#fff"
-    ctx.fillText(score + "%", 20, 30);
+    document.getElementById('score').innerText = "Percent decomposed: " + score + "%"
 
     requestAnimationFrame(engine_update);
 }

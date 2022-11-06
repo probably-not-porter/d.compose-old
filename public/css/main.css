@@ -1,3 +1,11 @@
+@font-face {
+    font-family: 'arcadeclassic';
+    src: url('../fonts/ARCADECLASSIC.TTF');
+}
+@font-face {
+    font-family: 'visitor';
+    src: url('../fonts/visitor1.ttf');
+}
 html{
     position: absolute;
     height: 100vh;
@@ -15,6 +23,8 @@ html{
     image-rendering: -webkit-crisp-edges;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
+    font-smooth: never;
+    -webkit-font-smoothing : none;
 } 
 #canvas 
 { 
@@ -47,4 +57,12 @@ html{
     left: 10px;
     font-size: 10px;
     color: rgba(255,255,255,0.5);
+}
+#score{
+    position: absolute;
+    font-family: visitor;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    color: white;
 }
