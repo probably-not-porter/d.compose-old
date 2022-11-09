@@ -5,7 +5,12 @@ particles = [
 score = 0;
 jump_reset = true;
 parallax_counter = 0;
-
+function starting_offset(){
+    scroll_right(player.x - (width / 2));
+    player.x = width / 2;
+    scroll_down(player.y - (height / 2));
+    player.y = height / 2;
+}
 // EXTERNAL FUNCTIONS
 function engine_update() {
     ctx.scale(1,1);
@@ -22,7 +27,7 @@ function engine_update() {
         if (!player.jumping && player.grounded && jump_reset) {
             player.jumping = true;
             player.grounded = false;
-            player.velY = -player.speed * 4;//how high to jump
+            player.velY = -player.speed * 3.3;//how high to jump
             jump_reset = false;
         }
     }else{
@@ -39,6 +44,31 @@ function engine_update() {
         if (player.velX > -player.speed) {
             player.velX--;
         }
+    }
+    player.velX *= friction;
+    player.velY += gravity;
+    player.grounded = false;
+
+    // terminal velocity
+    if (player.velY > terminal_velocity){player.velY = terminal_velocity}
+
+    // SCROLL SCENE AROUND PLAYER
+    if (player.x + padding >= width && player.velX > 0){
+        scroll_right(player.velX);
+        player.x = player.x - player.velX;
+    }
+    if (player.x - padding <= 0 && player.velX < 0){
+        scroll_left(-1 *player.velX);
+        player.x = player.x - player.velX;
+    }
+    if (player.y + padding >= height && player.velY > 0){
+        if (player.velY > 1) {scroll_down(player.velY);}
+        else { scroll_down(1); }
+        player.y = player.y - player.velY
+    }
+    if (player.y - padding <= 0 && player.velY < 0){
+        scroll_up(-1*(player.y - padding) / 10);
+        player.y = player.y - (player.y - padding) / 10
     }
 
     // check score
@@ -68,9 +98,7 @@ function engine_update() {
     ctx.drawImage(img_bg3, 0, 0,640,640);
     ctx.beginPath();
 
-    player.velX *= friction;
-    player.velY += gravity;
-    player.grounded = false;
+    
     
     // check all box colliders for level
     for (var i = 0; i < colliders.length; i++) {//print colliders
@@ -342,9 +370,53 @@ function particle_mushroom(x1,y1,x2,y2, parent){
         diameter: 5,
         parent: parent,
         x: getRandomArbitrary(x1, x2),
-        y: getRandomArbitrary(y1, y1 + 16),
+        y: getRandomArbitrary(y1, y1 + 2),
         motion: Math.random() / 2 + 0.5
     })
+}
+function scroll_right(n){
+    for (x = 0; x < objects.length; x++){
+        objects[x].x  = objects[x].x - n;
+    }
+    for (x = 0; x < colliders.length; x++){
+        colliders[x].x  = colliders[x].x - n;
+    }
+    for (x = 0; x < particles.length; x++){
+        particles[x].x  = particles[x].x - n;
+    }
+}
+function scroll_left(n){
+    for (x = 0; x < objects.length; x++){
+        objects[x].x  = objects[x].x + n;
+    }
+    for (x = 0; x < colliders.length; x++){
+        colliders[x].x  = colliders[x].x + n;
+    }
+    for (x = 0; x < particles.length; x++){
+        particles[x].x  = particles[x].x + n;
+    }
+}
+function scroll_up(n){
+    for (x = 0; x < objects.length; x++){
+        objects[x].y  = objects[x].y + n;
+    }
+    for (x = 0; x < colliders.length; x++){
+        colliders[x].y  = colliders[x].y + n;
+    }
+    for (x = 0; x < particles.length; x++){
+        particles[x].y  = particles[x].y + n;
+    }
+}
+function scroll_down(n){
+    for (x = 0; x < objects.length; x++){
+        objects[x].y  = objects[x].y - n;
+    }
+    for (x = 0; x < colliders.length; x++){
+        colliders[x].y  = colliders[x].y - n;
+    }
+    for (x = 0; x < particles.length; x++){
+        particles[x].y  = particles[x].y - n;
+    }
 }
 
 // ADD 5 automatically

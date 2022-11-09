@@ -1,35 +1,5 @@
 
 function build_level(arr, block_size){
-    let level_border = [
-        {
-            x: 0,
-            y: 0 - block_size,
-            width: block_size * arr[0].length,
-            height: block_size,
-            color: null
-        },
-        {
-            x: 0,
-            y: height,
-            width: block_size * arr[0].length,
-            height: block_size,
-            color: null
-        },
-        {
-            x: 0 - block_size,
-            y: 0,
-            width: block_size,
-            height: block_size * arr.length,
-            color: null
-        },
-        {
-            x: width,
-            y: 0,
-            width: block_size,
-            height: block_size * arr.length,
-            color: null
-        }
-    ];
 
     let level = {  
         playerx: 312,
@@ -165,7 +135,7 @@ function build_level(arr, block_size){
         }
     }
 
-    level.colliders = level.colliders.concat(level_border)
+    //level.colliders = level.colliders.concat(level_border)
     return level
 }
 
