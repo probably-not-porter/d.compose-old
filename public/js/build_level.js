@@ -45,6 +45,66 @@ function build_level(arr, block_size){
                         color: null
                     });
                     break;
+                
+                case "tb":                  // PILLAR BOTTOM
+                    level.objects.push({
+                        x: x * block_size,
+                        y: y * block_size,
+                        width: 32,
+                        height: 32,
+                        sprite: "pillarb",
+                        state: 'abnormal',
+                        layer: 'background',
+                        scorable: true,
+                    });
+                    level.colliders.push({
+                        x: x * block_size + 2,
+                        y: y * block_size,
+                        width: 28,
+                        height: 32,
+                        color: null
+                    });
+                    break;
+
+                case "tm":                  // PILLAR MIDDLE
+                    level.objects.push({
+                        x: x * block_size,
+                        y: y * block_size,
+                        width: 32,
+                        height: 32,
+                        sprite: "pillarm",
+                        state: 'abnormal',
+                        layer: 'background',
+                        scorable: true,
+                    });
+                    level.colliders.push({
+                        x: x * block_size + 2,
+                        y: y * block_size,
+                        width: 28,
+                        height: 32,
+                        color: null
+                    });
+                    break;
+                
+                case "tt":                  // PILLAR top
+                    level.objects.push({
+                        x: x * block_size,
+                        y: y * block_size,
+                        width: 32,
+                        height: 32,
+                        sprite: "pillart",
+                        state: 'abnormal',
+                        layer: 'background',
+                        scorable: true,
+                    });
+                    level.colliders.push({
+                        x: x * block_size + 2,
+                        y: y * block_size,
+                        width: 28,
+                        height: 32,
+                        color: null
+                    });
+                    break;
 
                 case "pl":                  // PLATFORM LEFT
                     level.objects.push({
@@ -65,6 +125,7 @@ function build_level(arr, block_size){
                         color: null
                     });
                     break;
+
                 case "pr":                  // PLATFORM RIGHT
                     level.objects.push({
                         x: x * block_size,
@@ -117,6 +178,7 @@ function build_level(arr, block_size){
                         scorable: false
                     });
                     break;
+
                 case "d2":                  // decoration 2
                     level.objects.push({ // starting platform decor
                         x: x * block_size,
@@ -124,6 +186,32 @@ function build_level(arr, block_size){
                         width: 64,
                         height: 64,
                         sprite: "mush2",
+                        state: 'abnormal',
+                        layer: 'foreground',
+                        scorable: false
+                    });
+                    break;
+                
+                case "g1":                  // decoration 2
+                    level.objects.push({ // starting platform decor
+                        x: x * block_size,
+                        y: y * block_size,
+                        width: 32,
+                        height: 32,
+                        sprite: "grass1",
+                        state: 'abnormal',
+                        layer: 'foreground',
+                        scorable: false
+                    });
+                    break;
+                
+                case "g2":                  // decoration 2
+                    level.objects.push({ // starting platform decor
+                        x: x * block_size,
+                        y: y * block_size,
+                        width: 32,
+                        height: 32,
+                        sprite: "grass2",
                         state: 'abnormal',
                         layer: 'foreground',
                         scorable: false

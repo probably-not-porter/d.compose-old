@@ -31,6 +31,14 @@ function update_particles(){
                 ctx.drawImage(spr, particles[j].x - 8 * size, particles[j].y - 16 * size, 16 * size * (objects[particles[j].parent].val / 100), 16 * size * (objects[particles[j].parent].val / 100));
 
             }
+            else if(particles[j].type == "mushroom2") {
+                var spr = document.getElementById("mush1");
+                particles[j].diameter += 1;
+                let size = particles[j].diameter / 100;
+                if (size > particles[j].motion) { size = particles[j].motion; }
+                ctx.drawImage(spr, particles[j].x - 8 * size, particles[j].y - 64 * size, 32 * size * (objects[particles[j].parent].val / 100), 64 * size * (objects[particles[j].parent].val / 100));
+
+            }
             
         }
         
@@ -68,14 +76,29 @@ function particle_firefly(){
     })
 }
 function particle_mushroom(x1,y1,x2,y2, parent){
-    particles.push({
-        type: "mushroom",
-        age: -1,
-        death: 0,
-        diameter: 5,
-        parent: parent,
-        x: getRandomArbitrary(x1, x2),
-        y: getRandomArbitrary(y1, y1 + 2),
-        motion: Math.random() / 2 + 0.5
-    })
+    seed = Math.random();
+    if (seed < 0.95){
+        particles.push({
+            type: "mushroom",
+            age: -1,
+            death: 0,
+            diameter: 5,
+            parent: parent,
+            x: getRandomArbitrary(x1, x2),
+            y: getRandomArbitrary(y1, y1 + 2),
+            motion: Math.random() / 2 + 0.5
+        })
+    }
+    else{
+        particles.push({
+            type: "mushroom2",
+            age: -1,
+            death: 0,
+            diameter: 5,
+            parent: parent,
+            x: getRandomArbitrary(x1, x2),
+            y: getRandomArbitrary(y1, y1 + 2),
+            motion: Math.random() / 2 + 0.5
+        })
+    }
 }
