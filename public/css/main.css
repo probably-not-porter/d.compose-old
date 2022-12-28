@@ -80,6 +80,10 @@ html{
     font-size: 20px;
     color: white;
 }
+#main_menu{
+    margin-top: 100px;
+    margin-left: 30px;
+}
 #title{
     position: absolute;
     top:10px;
@@ -87,4 +91,35 @@ html{
     font-size: 60px;
     color: white;
     font-family: arcadeclassic;
+}
+.nav-item{
+    font-size: 30px;
+    color: white;
+    font-family: arcadeclassic;
+    transition-duration: 200ms;
+}
+.nav-item:hover{
+    padding-left: 10px;
+    cursor: pointer;
+}
+#overlay_menu{
+    text-align: center;
+}
+#bar{
+    height: 20px;
+    background-color: white;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom:0px;
+}
+#bar_label{
+    height: 20px;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom:20px;
+    font-family: visitor;
+    color: white;
+    white-space: nowrap;
 }

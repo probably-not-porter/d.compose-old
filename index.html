@@ -16,9 +16,19 @@
         <div id="controls">
             <div id="main_menu">
                 <span id="title">d.Compose</span>
+                <span onclick='button_play();' class="nav-item">Play</span><br>
+                <span class="nav-item">Level Select</span><br>
+                <span class="nav-item">Load file</span>
             </div>
-            
-            <span id="score"></span>
+            <div style='display: none;' id="level_menu">
+                <span id="title">d.Compose</span>
+                <span id="title">Level Select</span>
+            </div>
+            <div style='display: none;' id="overlay_menu">
+                <span id="score"></span>
+                <div id="bar"></div>
+                <div id="bar_label">Hold to return to main menu</div>
+            </div>
         </div>
         
 
@@ -46,6 +56,7 @@
         <img style='display:none' id="pillart" width="16px" height="16px" src="public/sprites/pillar_t.png">
 
         <!-- GAME MANAGERS -->
+        
         <script type="text/javascript" src="public/js/levels.js"></script>
         <script type="text/javascript" src="public/js/main.js"></script>
         <script type="text/javascript" src="public/js/build_level.js"></script>
@@ -57,7 +68,9 @@
         <script type="text/javascript" src="public/js/engine_player.js"></script>
         <script type="text/javascript" src="public/js/engine_powerups.js"></script>
         <script type="text/javascript" src="public/js/engine_scroll.js"></script>
+        <script type="text/javascript" src="public/js/menu.js"></script>
         <script type="text/javascript" src="public/js/engine.js"></script>
+
     </body>
     
 </html>

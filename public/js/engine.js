@@ -1,7 +1,4 @@
 // INTERNAL VARS
-particles = [
-
-]
 score = 0;
 jump_reset = true;
 parallax_counter = 0;
@@ -24,15 +21,16 @@ function engine_update() {
     
     update_powerups();
     update_particles();
+    update_menu();
 
     
     // draw text
     document.getElementById('score').innerText = "Percent decomposed: " + score + "%"
-
-    setTimeout(() => {
-        requestAnimationFrame(engine_update);
-    }, 1000 / fps);
-    
+    if (running == true){
+        setTimeout(() => {
+            requestAnimationFrame(engine_update);
+        }, 1000 / fps);
+    }
 }
 
 // ADD 5 automatically

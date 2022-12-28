@@ -9,7 +9,7 @@ var height = 640;
 var block_size = 32;
 var parallax_speed = 0.15;
 var padding = 200; // scroll padding around player
-var terminal_velocity = 5;
+var terminal_velocity = 6;
 canvas.width = width;
 canvas.height = height;
 
@@ -49,9 +49,17 @@ colliders = [],
 objects = [],
 powerup = [],
 enemies = [];
+running = false,
+particles = [];
 
 // LEVEL LOADER
 function load_level(n){
+    keys = [];
+    colliders = [];
+    objects = [];
+    powerup = [];
+    enemies = [];
+    particles = [];
     level = build_level(levels[n], block_size)
     console.log(level);
     if (levels[n]) {
@@ -64,10 +72,3 @@ function load_level(n){
     }
 }
 
-// Start the game
-window.addEventListener("load", function () {
-    load_level(1);
-    starting_offset();
-    engine_update();
-    document.getElementById("themesong").play()
-});
