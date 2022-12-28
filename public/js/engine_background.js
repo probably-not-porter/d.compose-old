@@ -9,5 +9,5 @@ function update_background(){
     ctx.drawImage(img_bg1, 0, 0,640,640);
     ctx.drawImage(img_bg2, 0 + parallax_counter, 0,640,640);
     ctx.drawImage(img_bg2, (-1*width) + parallax_counter, 0,640,640);
-    ctx.drawImage(img_bg3, 0, 0,640,640);
+    //ctx.drawImage(img_bg3, 0, 0,640,640);
 }

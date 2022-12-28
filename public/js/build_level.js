@@ -33,6 +33,7 @@ function build_level(arr, block_size){
                         width: 32,
                         height: 32,
                         sprite: "block1",
+                        altsprite: "block2",
                         state: 'normal',
                         layer: 'background',
                         scorable: true,
@@ -43,6 +44,39 @@ function build_level(arr, block_size){
                         width: 32,
                         height: 32,
                         color: null
+                    });
+                    break;
+
+                case "b3":                  // BLOCK 3
+                    level.objects.push({
+                        x: x * block_size,
+                        y: y * block_size,
+                        width: 32,
+                        height: 32,
+                        sprite: "dirt1",
+                        state: 'abnormal',
+                        layer: 'background',
+                        scorable: false,
+                    });
+                    level.colliders.push({
+                        x: x * block_size,
+                        y: y * block_size,
+                        width: 32,
+                        height: 32,
+                        color: null
+                    });
+                    break;
+
+                case "b4":                  // BLOCK 4
+                    level.objects.push({
+                        x: x * block_size,
+                        y: y * block_size,
+                        width: 32,
+                        height: 32,
+                        sprite: "dirt2",
+                        state: 'abnormal',
+                        layer: 'background',
+                        scorable: false,
                     });
                     break;
                 

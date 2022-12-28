@@ -38,7 +38,21 @@ html{
     right: 0;
     width: 100vmin;
     height: 100vmin;
-    
+    z-index: 1;
+}
+#controls
+{ 
+    padding: 0;
+    margin: auto;
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vmin;
+    height: 100vmin;
+    z-index:3;
 }
 #tag
 {
@@ -65,4 +79,12 @@ html{
     right: 10px;
     font-size: 20px;
     color: white;
+}
+#title{
+    position: absolute;
+    top:10px;
+    left: 10px;
+    font-size: 60px;
+    color: white;
+    font-family: arcadeclassic;
 }
