@@ -1,5 +1,8 @@
 # d.Compose
-Written for the GameDev.tv Game jam 2022: https://itch.io/jam/gamedevtv-jam-2022
+Started during the GameDev.tv Game jam 2022: https://itch.io/jam/gamedevtv-jam-2022
+
+Original Theme: Death is only the beginning
+
 
 | Sprite | ID | Desc |
 |--------|----|------|
@@ -14,3 +17,7 @@ Written for the GameDev.tv Game jam 2022: https://itch.io/jam/gamedevtv-jam-2022
 | <img src='public/sprites/platform_left.png'> | `pl` | Platform left |
 | <img src='public/sprites/platform_middle.png'> | `pm` | Platform right |
 | <img src='public/sprites/platform_right.png'> | `pr` | Platform mid |
+
+Need to add:
+- Other grass tiles, sides, bottom?
+- Water?
