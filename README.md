@@ -17,6 +17,9 @@ Original Theme: Death is only the beginning
 | <img src='public/sprites/platform_left.png'> | `pl` | Platform left |
 | <img src='public/sprites/platform_middle.png'> | `pm` | Platform right |
 | <img src='public/sprites/platform_right.png'> | `pr` | Platform mid |
+| <img src='public/sprites/pillar_b.png'> | `tb` | Platform left |
+| <img src='public/sprites/pillar_m.png'> | `tm` | Platform right |
+| <img src='public/sprites/pillar_t.png'> | `tt` | Platform mid |
 
 Need to add:
 - Other grass tiles, sides, bottom?

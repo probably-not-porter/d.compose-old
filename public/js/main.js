@@ -1,10 +1,13 @@
+
+
 // PUBLIC VARIABLES, GAME SETUP
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
+const fps = 60;
 var width = 640;
 var height = 640;
 var block_size = 32;
-var parallax_speed = 0.05;
+var parallax_speed = 0.15;
 var padding = 200; // scroll padding around player
 var terminal_velocity = 5;
 canvas.width = width;
@@ -30,7 +33,8 @@ var player = {
     y: 200,
     width: 16,
     height: 16,
-    speed: 1.2,
+    speed: 4,
+    jumpheight: 8,
     velX: 0,
     velY: 0,
     jumping: false,
@@ -39,8 +43,8 @@ var player = {
 },
 
 keys = [],
-friction = 0.8,
-gravity = 0.1,
+friction = 0.75,
+gravity = 0.4,
 colliders = [],
 objects = [],
 powerup = [],
@@ -62,7 +66,7 @@ function load_level(n){
 
 // Start the game
 window.addEventListener("load", function () {
-    load_level(0);
+    load_level(1);
     starting_offset();
     engine_update();
     document.getElementById("themesong").play()

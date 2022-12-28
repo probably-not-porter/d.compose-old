@@ -5,7 +5,7 @@ function update_player(){
         if (!player.jumping && player.grounded && jump_reset) {
             player.jumping = true;
             player.grounded = false;
-            player.velY = -player.speed * 3.3;//how high to jump
+            player.velY = -player.jumpheight;//how high to jump
             jump_reset = false;
         }
     }else{

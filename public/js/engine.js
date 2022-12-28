@@ -28,7 +28,11 @@ function engine_update() {
     
     // draw text
     document.getElementById('score').innerText = "Percent decomposed: " + score + "%"
-    requestAnimationFrame(engine_update);
+
+    setTimeout(() => {
+        requestAnimationFrame(engine_update);
+    }, 1000 / fps);
+    
 }
 
 // ADD 5 automatically
